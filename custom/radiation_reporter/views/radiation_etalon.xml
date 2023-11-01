@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2023 Voadimasina
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="radiation_etalon_form_view">
+        <field name="model">radiation.etalon</field>
+        <field name="arch" type="xml">
+            <form>
+                <header/>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="element_id"/>
+                            <field name="temps_compt"/>
+                            <field name="aire_nette"/>
+                            <field name="inc_aire_nette"/>
+                            <field name="taux_compt"/>
+                            <field name="inc_taux_compt"/>
+                        </group>
+                        <group>
+                            <field name="geometrie"/>
+                            <field name="masse"/>
+                            <field name="activity"/>
+                            <field name="inc_activity"/>
+                            <field name="facteur_conversion"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter"></div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="radiation_etalon_search_view">
+        <field name="model">radiation.etalon</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="element_id"/>
+                <field name="geometrie"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="radiation_etalon_tree_view">
+        <field name="model">radiation.etalon</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="element_id"/>
+                <field name="temps_compt"/>
+                <field name="aire_nette"/>
+                <field name="inc_aire_nette"/>
+                <field name="geometrie"/>
+                <field name="masse"/>
+                <field name="activity"/>
+                <field name="inc_activity"/>
+                <field name="facteur_conversion"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="radiation_etalon_act_window">
+        <field name="name">Radiation Etalon</field>
+        <field name="res_model">radiation.etalon</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.menu" id="radiation_etalon_menu">
+        <field name="name">Radiation Etalon</field>
+         <field name="parent_id" ref="radiation_reporter.main_configuration_menu"/>
+        <field name="action" ref="radiation_etalon_act_window"/>
+        <field name="sequence" eval="20"/>
+    </record>
+
+</odoo>

@@ -6,7 +6,22 @@
 
     <record model="ir.ui.menu" id="main_menu">
         <field name="name">Analyse radioactivite</field>
-        <field name="sequence" eval="1"/> <!-- TODO -->
+        <field name="sequence" eval="1"/>
+        <field name="web_icon">radiation_reporter,static/description/icon.svg</field>
     </record>
+
+
+    <record model="ir.ui.menu" id="main_analyse_menu">
+        <field name="name">Analyse</field>
+        <field name="parent_id" ref="radiation_reporter.main_menu"/>
+        <field name="sequence" eval="20"/>
+    </record>
+
+     <record model="ir.ui.menu" id="main_configuration_menu">
+        <field name="name">Configuration</field>
+        <field name="parent_id" ref="radiation_reporter.main_menu"/>
+        <field name="sequence" eval="40"/>
+    </record>
+
 
 </odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2023 Voadimasina
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+
+
+    <record model="ir.ui.view" id="radiation_element_tree_view">
+        <field name="model">radiation.element</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="radiation_element_act_window">
+        <field name="name">Element</field>
+        <field name="res_model">radiation.element</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record model="ir.ui.menu" id="radiation_element_menu">
+        <field name="name">Element</field>
+        <field name="parent_id" ref="radiation_reporter.main_configuration_menu"/>
+        <field name="action" ref="radiation_element_act_window"/>
+        <field name="sequence" eval="16"/>
+    </record>
+
+</odoo>

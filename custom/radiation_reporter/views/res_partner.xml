@@ -55,7 +55,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="res_partner_act_window">
-        <field name="name">Res Partner</field> <!-- TODO -->
+        <field name="name">Client</field> <!-- TODO -->
         <field name="res_model">res.partner</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
@@ -78,9 +78,9 @@
 
     <record model="ir.ui.menu" id="res_partner_menu">
         <field name="name">Client</field>
-        <field name="parent_id" ref="contacts.menu_contacts"/> <!-- TODO -->
+        <field name="parent_id" ref="radiation_reporter.main_menu"/>
         <field name="action" ref="res_partner_act_window"/>
-        <field name="sequence" eval="16"/> <!-- TODO -->
+        <field name="sequence" eval="16"/>
     </record>
 
 </odoo>

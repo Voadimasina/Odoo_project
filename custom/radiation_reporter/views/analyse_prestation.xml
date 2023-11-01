@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2023 Voadimasina
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="analyse_prestation_form_view">
+        <field name="model">analyse.prestation</field>
+        <field name="arch" type="xml">
+            <form>
+                <header/>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="client_id"/>
+                            <field name="user_id"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="quantity"/>
+                            <field name="product_id"/>
+                            <field name="uom"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Prélèvements" name="prelevement">
+                            <field name="prelevement_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="masse"/>
+                                    <field name="uom"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!--                <div class="oe_chatter"></div>-->
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="analyse_prestation_search_view">
+        <field name="model">analyse.prestation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="client_id"/>
+                <field name="user_id"/>
+                <field name="product_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="analyse_prestation_tree_view">
+        <field name="model">analyse.prestation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="client_id"/>
+                <field name="user_id"/>
+                <field name="date"/>
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="uom"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="analyse_prestation_act_window">
+        <field name="name">Prestation d'analyse</field>
+        <field name="res_model">analyse.prestation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.menu" id="prestation_menu">
+        <field name="name">Prestation</field>
+        <field name="parent_id" ref="radiation_reporter.main_analyse_menu"/>
+        <field name="action" ref="analyse_prestation_act_window"/>
+        <field name="sequence" eval="5"/>
+    </record>
+
+</odoo>

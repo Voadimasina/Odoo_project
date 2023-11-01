@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2023 Voadimasina
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="radiation_analyse_form_view">
+        <field name="model">radiation.analyse</field>
+        <field name="arch" type="xml">
+            <form>
+                <header/>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="user_id"/>
+                        </group>
+                        <group>
+                            <field name="prestation_id"/>
+                            <field name="prelevement_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Matières" name="matiere">
+                            <field name="matiere_ids">
+                                <tree editable="bottom">
+                                    <field name="element_id"/>
+                                    <field name="temps_compt"/>
+                                    <field name="aire_nette"/>
+                                    <field name="inc_aire_nette"/>
+                                    <field name="taux_compt"/>
+                                    <field name="inc_taux_compt"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Etalons" name="etalon">
+                            <field name="etalon_ids">
+                                <tree editable="bottom">
+                                    <field name="element_id"/>
+                                    <field name="temps_compt"/>
+                                    <field name="aire_nette"/>
+                                    <field name="inc_aire_nette"/>
+                                    <field name="geometrie"/>
+                                    <field name="masse"/>
+                                    <field name="activity"/>
+                                    <field name="inc_activity"/>
+                                    <field name="facteur_conversion"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Bruits de fond" name="bruit">
+                            <field name="bruit_ids">
+                                <tree editable="bottom">
+                                    <field name="element_id"/>
+                                    <field name="temps_compt"/>
+                                    <field name="aire_nette"/>
+                                    <field name="inc_aire_nette"/>
+                                    <field name="taux_compt"/>
+                                    <field name="inc_taux_compt"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="radiation_analyse_search_view">
+        <field name="model">radiation.analyse</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="client_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="radiation_analyse_tree_view">
+        <field name="model">radiation.analyse</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="client_id"/>
+                <field name="date"/>
+                <field name="user_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="radiation_analyse_act_window">
+        <field name="name">Radiation Analyse</field>
+        <field name="res_model">radiation.analyse</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.menu" id="radiation_analyse_menu">
+        <field name="name">Analyse</field>
+        <field name="parent_id" ref="radiation_reporter.main_analyse_menu"/>
+        <field name="action" ref="radiation_analyse_act_window"/>
+        <field name="sequence" eval="10"/>
+    </record>
+
+</odoo>
