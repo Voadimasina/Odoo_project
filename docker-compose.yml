@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  odoo-db:
+    image: postgres:13
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_USER: odoo16
+      POSTGRES_PASSWORD: odoo16
+      POSTGRES_DB: Odoo
+    networks:
+      - freecodecamp
+    restart: always             # run as a service
+    volumes:
+        - ./postgresql:/var/lib/postgresql/data
+
+networks:
+  freecodecamp:
