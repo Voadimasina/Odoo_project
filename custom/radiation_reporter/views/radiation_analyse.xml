@@ -8,11 +8,19 @@
         <field name="model">radiation.analyse</field>
         <field name="arch" type="xml">
             <form>
-                <header/>
+                <header>
+                    <button name="action_generate_resultat" string="Generer Résultat"
+                            type="object" class="oe_highlight" attrs="{'invisible': [('resultat_count', '>', 0)]}"/>
+                </header>
                 <sheet>
+                    <field name="resultat_count" invisible="1"/>
+                    <h2>
+                        <field name="name" readonly="1"/>
+                    </h2>
                     <group>
                         <group>
                             <field name="date"/>
+                            <field name="client_id"/>
                             <field name="user_id"/>
                         </group>
                         <group>
@@ -79,6 +87,7 @@
         <field name="model">radiation.analyse</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="name"/>
                 <field name="client_id"/>
                 <field name="date"/>
                 <field name="user_id"/>
@@ -87,7 +96,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="radiation_analyse_act_window">
-        <field name="name">Radiation Analyse</field>
+        <field name="name">Analyse</field>
         <field name="res_model">radiation.analyse</field>
         <field name="view_mode">tree,form</field>
     </record>

@@ -13,6 +13,10 @@
         'base', 'web',
     ],
     'data': [
+        'security/radiation_resultat_line.xml',
+        'security/radiation_resultat.xml',
+        'views/radiation_resultat.xml',
+        'data/ir_sequence_data.xml',
         'security/radiation_analyse.xml',
         'security/radiation_matiere.xml',
         'security/bruit_fond.xml',

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2023 Voadimasina
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="radiation_resultat_form_view">
+        <field name="model">radiation.resultat</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0">
+                <header>
+
+                </header>
+                <sheet>
+                    <h2>
+                        <field name="name"/>
+                    </h2>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="client_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="analyse_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Liste de résultats" name="resultat_line">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="element_id"/>
+                                    <field name="activite"/>
+                                    <field name="inc_activite"/>
+                                    <field name="teneur"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter"></div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="radiation_resultat_search_view">
+        <field name="model">radiation.resultat</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="client_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="radiation_resultat_tree_view">
+        <field name="model">radiation.resultat</field>
+        <field name="arch" type="xml">
+            <tree  create="0" edit="0">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="client_id"/>
+                <field name="user_id"/>
+                <field name="analyse_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="radiation_resultat_act_window">
+        <field name="name">Radiation Resultat</field>
+        <field name="res_model">radiation.resultat</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.menu" id="radiation_resultat_menu">
+        <field name="name">Radiation Resultat</field>
+        <field name="parent_id" ref="radiation_reporter.main_menu"/>
+        <field name="action" ref="radiation_resultat_act_window"/>
+        <field name="sequence" eval="30"/>
+    </record>
+
+</odoo>

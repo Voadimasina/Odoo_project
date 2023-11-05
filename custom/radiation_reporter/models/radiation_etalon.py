@@ -13,10 +13,13 @@ class RadiationEtalon(models.Model):
     masse = fields.Float()
     activity = fields.Float(
         string="Activité",
+        digits=(12, 5),
     )
     inc_activity = fields.Float(
-        string="Incertitude de l'activité"
+        string="Incertitude de l'activité",
+        digits=(12, 5),
     )
     facteur_conversion = fields.Float(
-        string="facteur de Conversion"
+        string="facteur de Conversion",
+        digits=(12, 5),
     )

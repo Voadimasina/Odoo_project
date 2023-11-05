@@ -8,3 +8,5 @@ from . import radiation_etalon
 from . import bruit_fond
 from . import radiation_matiere
 from . import radiation_analyse
+from . import radiation_resultat
+from . import radiation_resultat_line

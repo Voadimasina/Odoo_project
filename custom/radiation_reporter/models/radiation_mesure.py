@@ -14,16 +14,23 @@ class RadiationMesure(models.AbstractModel):
     )
     temps_compt = fields.Float(
         default=1,
+        digits=(12, 5),
     )
-    aire_nette = fields.Float()
-    inc_aire_nette = fields.Float()
+    aire_nette = fields.Float(
+        digits=(12, 5),
+    )
+    inc_aire_nette = fields.Float(
+        digits=(12, 5),
+    )
     taux_compt = fields.Float(
         compute='_compute_taux_compt',
         store=True,
+        digits=(12, 5),
     )
     inc_taux_compt = fields.Float(
         compute='_compute_taux_compt',
         store=True,
+        digits=(12, 5),
     )
 
     @api.depends('temps_compt', 'aire_nette', 'inc_aire_nette')

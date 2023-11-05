@@ -9,6 +9,13 @@ class RadiationPrelevement(models.Model):
     _name = "radiation.prelevement"
     _description = "Radiation Prelevement"
 
+    name = fields.Char(
+        string="Référence",
+        required=True, copy=False, readonly=True,
+        index='trigram',
+        default=lambda self: _('Nouveau'),
+    )
+
     prestation_id = fields.Many2one(
         comodel_name='analyse.prestation',
     )
@@ -28,4 +35,11 @@ class RadiationPrelevement(models.Model):
         default='g',
         string="Unité",
     )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', _("Nouveau")) == _("Nouveau"):
+                vals['name'] = self.env['ir.sequence'].next_by_code('radiation.prelevement') or _("Nouveau")
+        return super().create(vals_list)
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="seq_prestation" model="ir.sequence">
+        <field name="name">Analyse Prestation</field>
+        <field name="code">analyse.prestation</field>
+        <field name="prefix">PR</field>
+        <field name="padding">5</field>
+    </record>
+
+    <record id="seq_prelevement" model="ir.sequence">
+        <field name="name">Radiation Prélèvement</field>
+        <field name="code">radiation.prelevement</field>
+        <field name="prefix">PRL</field>
+        <field name="padding">6</field>
+    </record>
+
+     <record id="seq_analyse" model="ir.sequence">
+        <field name="name">Radiation Analyse</field>
+        <field name="code">radiation.analyse</field>
+        <field name="prefix">AN</field>
+        <field name="padding">5</field>
+    </record>
+
+     <record id="seq_result" model="ir.sequence">
+        <field name="name">Radiation résultat</field>
+        <field name="code">radiation.resultat</field>
+        <field name="prefix">RES</field>
+        <field name="padding">5</field>
+    </record>
+
+</odoo>
