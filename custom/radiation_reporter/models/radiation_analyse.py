@@ -3,7 +3,7 @@
 
 from math import sqrt
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 
 class RadiationAnalyse(models.Model):
@@ -90,26 +90,30 @@ class RadiationAnalyse(models.Model):
         if matieres.element_id - bruits.element_id:
             raise ValidationError("Bruits de fond manquants")
         line_data = []
-        for matiere in matieres:
-            etalon = etalons.filtered(lambda l: l.element_id == matiere.element_id)[0]
-            bruit = bruits.filtered(lambda l: l.element_id == matiere.element_id)[0]
-            taux_compt_etalon = etalon.taux_compt - bruit.taux_compt
-            taux_compt_matiere = matiere.taux_compt - bruit.taux_compt
-            inc_taux_compt_etalon = sqrt(etalon.inc_taux_compt ** 2 + bruit.inc_taux_compt ** 2)
-            inc_taux_compt_matiere = sqrt(matiere.inc_taux_compt ** 2 + bruit.inc_taux_compt ** 2)
-            activite = (etalon.activity * taux_compt_matiere * etalon.masse) / (taux_compt_etalon * prelevement_masse)
-            inc_activite = activite * sqrt(
-                (inc_taux_compt_etalon / taux_compt_etalon) ** 2
-                + (inc_taux_compt_matiere / taux_compt_matiere) ** 2
-                + (etalon.inc_activity / etalon.activity) ** 2
-            )
-            teneur = activite / etalon.facteur_conversion
-            line_data.append((0, 0, {
-                'element_id': matiere.element_id.id,
-                'activite': activite,
-                'inc_activite': inc_activite,
-                'teneur': teneur,
-            }))
+        try:
+            for matiere in matieres:
+                etalon = etalons.filtered(lambda l: l.element_id == matiere.element_id)[0]
+                bruit = bruits.filtered(lambda l: l.element_id == matiere.element_id)[0]
+                taux_compt_etalon = etalon.taux_compt - bruit.taux_compt
+                taux_compt_matiere = matiere.taux_compt - bruit.taux_compt
+                inc_taux_compt_etalon = sqrt(etalon.inc_taux_compt ** 2 + bruit.inc_taux_compt ** 2)
+                inc_taux_compt_matiere = sqrt(matiere.inc_taux_compt ** 2 + bruit.inc_taux_compt ** 2)
+                activite = (etalon.activity * taux_compt_matiere * etalon.masse) / (
+                            taux_compt_etalon * prelevement_masse)
+                inc_activite = activite * sqrt(
+                    (inc_taux_compt_etalon / taux_compt_etalon) ** 2
+                    + (inc_taux_compt_matiere / taux_compt_matiere) ** 2
+                    + (etalon.inc_activity / etalon.activity) ** 2
+                )
+                teneur = activite / etalon.facteur_conversion
+                line_data.append((0, 0, {
+                    'element_id': matiere.element_id.id,
+                    'activite': activite,
+                    'inc_activite': inc_activite,
+                    'teneur': teneur,
+                }))
+        except ZeroDivisionError:
+            raise UserError('Division par zéro impossible, veuillez vérifier les données saisies')
         resultat_data = {
             "analyse_id": self.id,
             "user_id": self.user_id.id,
@@ -117,4 +121,3 @@ class RadiationAnalyse(models.Model):
         }
         resultat = self.env["radiation.resultat"].create(resultat_data)
         self.prelevement_id.write({"resultat_id": resultat.id})
-
