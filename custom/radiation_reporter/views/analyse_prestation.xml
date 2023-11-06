@@ -13,8 +13,14 @@
                     <button name="action_perform_analysis" string="Procéder à une analyse"
                             type="object" class="oe_highlight"
                             attrs="{'invisible': [('state', '=', 'done')]}"/>
+                    <button name="action_generate_report" string="Générer le rapport"
+                            type="object" class="oe_highlight"
+                            attrs="{'invisible': [('resultat_count', '=', 0)]}"/>
+                    <button name="action_send_mail" string="Envoyer par e-mail"
+                            type="object" class="oe_highlight"
+                            attrs="{'invisible': [('resultat_count', '=', 0)]}"/>
                     <button name="action_set_done" string="Terminer"
-                            type="object" class="oe_highlight" title="Marquer comme fait"
+                            type="object" class="btn btn-secondary" title="Marquer comme fait"
                             attrs="{'invisible': [('state', '=', 'done')]}"/>
                     <button name="action_set_cancel" string="Annuler"
                             type="object" title="Marquer comme nouveau"
@@ -57,6 +63,13 @@
                         </page>
                     </notebook>
                 </sheet>
+                <div class="o_attachment_preview"/>
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
                 <!--                <div class="oe_chatter"></div>-->
             </form>
         </field>

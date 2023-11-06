@@ -16,3 +16,9 @@ class RadiationElement(models.Model):
     code = fields.Char(
         required=True,
     )
+    low_level = fields.Integer(
+        string="Niveau faible"
+    )
+    level_exemption = fields.Integer(
+        string="Niveau d'exemption",
+    )

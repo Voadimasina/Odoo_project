@@ -12,6 +12,8 @@
             <tree editable="bottom">
                 <field name="name"/>
                 <field name="code"/>
+                <field name="low_level"/>
+                <field name="level_exemption"/>
             </tree>
         </field>
     </record>

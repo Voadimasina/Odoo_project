@@ -15,74 +15,171 @@
                         .payment-state td {
                         border: none;
                         }
+                        .table-resultat th, .table-resultat td {
+                        text-align: center;
+                        vertical-align: middle;
+                        border: 1px solid black;
+                        }
+                        .italic-text {
+                        font-style: italic;
+                        font-size: 14px;
+                        }
                     </style>
                     <div class="page">
-                        <p>
-                            Notre réf.:23/06/05/16/INSTN/DG/ATN/Rv
+                         <p>
+                            Votre réf.:
                         </p>
                         <p>
-                            Antananarivo le, <t t-esc="date" t-options="{'widget': 'date'}"/>
+                            Notre réf.:<t t-esc="ref"/>
+                        </p>
+                        <p align="right">
+                            Antananarivo le,
+                            <t t-esc="date"/>
                         </p>
                         <div class="text-center">
-                            <h2>Rapport d’analyse de la radioactivité</h2>
+                            <h3>Rapport d’analyse de la radioactivité</h3>
                         </div>
-
-                        <t t-as='journal_payments' t-foreach="journal_payments_dict">
-                            <t t-set="journal_payments" t-value="journal_payments_dict[journal_payments]"/>
-                            <table class="table payment-state">
+                        <table class="table table-sm">
+                            <tbody>
                                 <tr>
+                                    <td>Rapport effectué le</td>
+                                    <td align="center">:</td>
                                     <td>
-                                        <span class="custom-h3">Journal:
-                                            <t t-esc="journal_payments['journal_name']"/>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="custom-h3">Total:
-                                            <t t-esc="currency.round(journal_payments['subtotal'])"
-                                               t-options="{'widget': 'monetary', 'precision': currency_precision,  'display_currency': currency}"/>
-                                        </span>
+                                        <t t-esc="date"/>
                                     </td>
                                 </tr>
-                            </table>
-                            <t t-set="payments" t-value="journal_payments['payments']"></t>
-                            <table class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Nom</th>
-                                        <th>Mémo</th>
-                                        <th>Client</th>
-                                        <th>Montant</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr t-foreach='payments' t-as='line'>
-                                        <td>
-                                            <t t-esc="line['name']"/>
-                                        </td>
-                                        <td>
-                                            <t t-esc="line['memo']"/>
-                                        </td>
-                                        <td>
-                                            <t t-esc="line['partner']"/>
-                                        </td>
-                                        <td>
-                                            <t t-esc="line['amount']"
-                                               t-options="{'widget': 'monetary', 'precision': currency_precision,  'display_currency': currency}"/>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <br/>
-                        </t>
-
+                                <tr>
+                                    <td>Client</td>
+                                    <td align="center">:</td>
+                                    <td>
+                                        <t t-esc="client"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Type du produit</td>
+                                    <td align="center">:</td>
+                                    <td>
+                                        <t t-esc="produit"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Responsables de prélèvement</td>
+                                    <td align="center">:</td>
+                                    <td>
+                                        <t t-esc="resp"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Représentant</td>
+                                    <td align="center">:</td>
+                                    <td>
+                                        Non mentionné
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Technique d’analyse</td>
+                                    <td align="center">:</td>
+                                    <td>
+                                        Spectrométrie gamma, détecteur NaI(Tl)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Type d’analyse</td>
+                                    <td align="center">:</td>
+                                    <td>
+                                        Analyse quantitative
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                         <br/>
-                        <div align="right">
-                            <strong>Total:
-                                <t t-esc="total"
-                                   t-options="{'widget': 'monetary', 'precision': currency_precision,  'display_currency': currency}"/>
-                            </strong>
-                        </div>
+                        <b>Résultats:</b>
+                        <br/>
+                        <table class="table table-sm table-resultat">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Famille</th>
+                                    <th>Activité (Bq.kg-1)</th>
+                                    <th>Niveaux d’exemption (Bq.kg-1)(*)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-as='resultat' t-foreach="resultats">
+                                    <td t-att-rowspan="resultat['rowspan']" t-if="resultat['rowspan'] > 0">
+                                        <t t-esc="resultat['code']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="resultat['famille']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="resultat['activity']"/>
+                                        &amp;nbsp; ± &amp;nbsp;
+                                        <t t-esc="resultat['inc_activity']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="resultat['level_exemption']"/>
+                                    </td>
 
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p class="italic-text">
+                            <b>(*) D’après les Normes Fondamentales Internationales de Protection contre les
+                                Rayonnements
+                                Ionisants et de Sûreté des Sources de Rayonnements (Collection Sécurité n°115), AIEA
+                                1997.
+                            </b>
+                        </p>
+                        <br/>
+                        <b>Conclusion:</b>
+                        <div>
+                            <p t-if="level=='high'">
+                                - Les échantillons analysés présentent des <b>niveaux élevés</b> de radioactivité
+                                naturelle.
+                                <br/>
+                                - Il n’y a pas de trace de radionucléides artificiels.
+                                <br/>
+                                - La marchandise est classée dans la catégorie LSA-I.
+                                <br/>
+                                - Les activités des radionucléides naturels présents dans ces produits exigent des
+                                mesures de radioprotection pour sa manipulation et son utilisation.
+                                <br/>
+                            </p>
+                            <p t-if="level=='normal'">
+                                - Le produit analysé présente des <b>niveaux normaux</b> de radioactivité.
+                                <br/>
+                                - Les activités des radionucléides naturels dans le produit ne présentent pas de danger
+                                pour sa manipulation et son utilisation.
+                                <br/>
+                                - Il n’y a pas de trace de radionucléides artificiels.
+                                <br/>
+                            </p>
+                            <p t-if="level=='low'">
+                                - Le produit analysé présente des <b>niveaux faibles</b> de radioactivité.
+                                <br/>
+                                - Les activités des radionucléides naturels dans le produit ne présentent pas de danger
+                                pour sa manipulation et son utilisation.
+                                <br/>
+                                - Il n’y a pas de trace de radionucléides artificiels.
+                                <br/>
+                            </p>
+                        </div>
+                        <br/>
+                        <b>Notes importantes:</b>
+                        <div>
+                            <p>
+                                - Les résultats dans ce rapport correspondent
+                                <span style="color: red;">uniquement à la quantité du produit analysé.</span>
+                                <br/>
+                                - Pour manque de représentativité et de traçabilité,
+                                <span style="color: red;">ce rapport d’analyse ne peut servir de
+                                    pièce justificative pour l’obtention d’une quelconque autorisation
+                                </span>
+                                <br/>
+                            </p>
+                        </div>
                     </div>
                 </t>
             </t>
@@ -90,7 +187,7 @@
     </data>
 
 
-    <record id="payment_report_details_report" model="ir.actions.report">
+    <record id="radiation_report_details_report" model="ir.actions.report">
         <field name="name">Radiation Report</field>
         <field name="model">analyse.prestation</field>
         <field name="report_type">qweb-pdf</field>

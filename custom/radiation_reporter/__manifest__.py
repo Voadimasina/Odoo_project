@@ -10,13 +10,14 @@
     'author': 'Voadimasina',
     'website': 'www.odoo.com',
     'depends': [
-        'base', 'web',
+        'base', 'web', 'mail'
     ],
     'data': [
         'security/radiation_resultat_line.xml',
         'security/radiation_resultat.xml',
-        'views/radiation_resultat.xml',
         'data/ir_sequence_data.xml',
+        'data/mail_template.xml',
+        'report/radiation_report_template.xml',
         'security/radiation_analyse.xml',
         'security/radiation_matiere.xml',
         'security/bruit_fond.xml',
@@ -32,6 +33,7 @@
         'views/radiation_produit.xml',
         'views/radiation_etalon.xml',
         'views/radiation_analyse.xml',
+        'views/radiation_resultat.xml',
     ],
     'demo': [
     ],

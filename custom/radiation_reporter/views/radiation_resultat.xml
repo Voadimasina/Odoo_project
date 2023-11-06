@@ -33,6 +33,7 @@
                                     <field name="activite"/>
                                     <field name="inc_activite"/>
                                     <field name="teneur"/>
+                                    <field name="level"/>
                                 </tree>
                             </field>
                         </page>
@@ -68,13 +69,13 @@
     </record>
 
     <record model="ir.actions.act_window" id="radiation_resultat_act_window">
-        <field name="name">Radiation Resultat</field>
+        <field name="name">Resultat</field>
         <field name="res_model">radiation.resultat</field>
         <field name="view_mode">tree,form</field>
     </record>
 
     <record model="ir.ui.menu" id="radiation_resultat_menu">
-        <field name="name">Radiation Resultat</field>
+        <field name="name">Resultats</field>
         <field name="parent_id" ref="radiation_reporter.main_menu"/>
         <field name="action" ref="radiation_resultat_act_window"/>
         <field name="sequence" eval="30"/>

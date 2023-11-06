@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+
+        <!-- Mail template are declared in a NOUPDATE block
+             so users can freely customize/delete them -->
+        <!--Email template -->
+        <record id="email_template_radiation_report" model="mail.template">
+            <field name="name">Rapport d’analyse de la radioactivité</field>
+            <field name="model_id" ref="radiation_reporter.model_analyse_prestation"/>
+            <field name="subject">Rapport d’analyse de la radioactivité - {{datetime.date.today().strftime('%d %B %Y')}}
+            </field>
+            <field name="body_html" type="html">
+                <div></div>
+                                <div style="margin: 0px; padding: 0px;">
+                                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                                        Bonjour,
+                                        <br/>
+                                        Je vous prie de bien vouloir trouver ci-joint le rapport d'analyse de la radioactivité.
+                                        <br/>
+                                        Cordialement,
+                                    </p>
+                                </div>
+            </field>
+            <field name="lang">{{object.env.lang}}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>
