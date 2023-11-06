@@ -5,7 +5,6 @@ from odoo import _, api, fields, models
 
 
 class BruitFond(models.Model):
-
     _name = "bruit.fond"
     _inherit = ['radiation.mesure']
     _description = "Bruit de fond"
