@@ -35,6 +35,9 @@ class RadiationPrelevement(models.Model):
         default='g',
         string="Unité",
     )
+    resultat_id = fields.Many2one(
+        comodel_name="radiation.resultat",
+    )
 
     @api.model_create_multi
     def create(self, vals_list):

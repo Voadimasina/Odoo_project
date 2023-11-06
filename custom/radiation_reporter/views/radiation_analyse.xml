@@ -13,7 +13,11 @@
                             type="object" class="oe_highlight" attrs="{'invisible': [('resultat_count', '>', 0)]}"/>
                 </header>
                 <sheet>
-                    <field name="resultat_count" invisible="1"/>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_view_resultats" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="resultat_count" widget="statinfo" string="Resultat"/>
+                        </button>
+                    </div>
                     <h2>
                         <field name="name" readonly="1"/>
                     </h2>

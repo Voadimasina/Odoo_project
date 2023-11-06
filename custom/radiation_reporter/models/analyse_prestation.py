@@ -61,6 +61,30 @@ class AnalysePrestation(models.Model):
         comodel_name='radiation.prelevement',
         inverse_name='prestation_id',
     )
+    resultat_ids = fields.One2many(
+        comodel_name='radiation.resultat',
+        compute='_compute_resultat_ids'
+    )
+    resultat_count = fields.Integer(
+        compute='_compute_resultat_ids'
+    )
+    analyse_ids = fields.One2many(
+        comodel_name='radiation.analyse',
+        inverse_name='prestation_id',
+    )
+    analyse_count = fields.Integer(
+        compute='_compute_analyse_count',
+    )
+
+    @api.depends('analyse_ids')
+    def _compute_analyse_count(self):
+        for rec in self:
+            rec.analyse_count = len(rec.analyse_ids)
+    @api.depends('prelevement_ids.resultat_id')
+    def _compute_resultat_ids(self):
+        for rec in self:
+            rec.resultat_ids = rec.prelevement_ids.resultat_id
+            rec.resultat_count = len(rec.prelevement_ids.resultat_id)
 
     def action_set_done(self):
         self.write({'state': 'done'})
@@ -75,9 +99,9 @@ class AnalysePrestation(models.Model):
         action = self.env['ir.actions.actions']._for_xml_id('radiation_reporter.radiation_analyse_act_window')
         action['context'] = {
             'default_prestation_id': self.id,
-            'default_prelevement_id': self.prelevement_ids[0].id,
         }
         action['view_mode'] = 'form'
+        action['domain'] = [('prestation_id', '=', self.id)]
         return action
 
     @api.model_create_multi
@@ -90,4 +114,23 @@ class AnalysePrestation(models.Model):
                 vals['name'] = self.env['ir.sequence'].next_by_code(
                     'analyse.prestation', sequence_date=seq_date) or _("Nouveau")
         return super().create(vals_list)
+
+    def action_generate_report(self):
+        self.ensure_one()
+
+        pass
+
+    def action_view_resultats(self):
+        action = self.sudo().env.ref('radiation_reporter.radiation_resultat_act_window').read()[0]
+        action.update({
+            'domain': [('id', 'in', self.resultat_ids.ids)],
+        })
+        return action
+
+    def action_view_analyse(self):
+        action = self.sudo().env.ref('radiation_reporter.radiation_analyse_act_window').read()[0]
+        action.update({
+            'domain': [('prestation_id', '=', self.id)],
+        })
+        return action
     # TODO: add fields state

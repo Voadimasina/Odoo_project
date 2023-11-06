@@ -34,7 +34,7 @@ class RadiationAnalyse(models.Model):
     )
     prelevement_id = fields.Many2one(
         comodel_name='radiation.prelevement',
-        domain="[('prestation_id', '=', prestation_id)]",
+        domain="[('prestation_id', '=', prestation_id), ('resultat_id','=', False)]",
         required=True,
     )
     etalon_ids = fields.Many2many(
@@ -55,6 +55,13 @@ class RadiationAnalyse(models.Model):
     resultat_count = fields.Integer(
         compute="_compute_resultat_count"
     )
+
+    def action_view_resultats(self):
+        action = self.sudo().env.ref('radiation_reporter.radiation_resultat_act_window').read()[0]
+        action.update({
+            'domain': [('id', 'in', self.resultat_ids.ids)],
+        })
+        return action
 
     @api.depends('resultat_ids')
     def _compute_resultat_count(self):
@@ -108,4 +115,6 @@ class RadiationAnalyse(models.Model):
             "user_id": self.user_id.id,
             "line_ids": line_data
         }
-        self.env["radiation.resultat"].create(resultat_data)
+        resultat = self.env["radiation.resultat"].create(resultat_data)
+        self.prelevement_id.write({"resultat_id": resultat.id})
+

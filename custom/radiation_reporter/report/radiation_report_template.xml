@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <template id="radiationreport">
+            <t t-set="company" t-value="env.company"/>
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <style>
+                        .custom-h3 {
+                        font-size: 20px;
+                        font-weight: bold;
+                        }
+
+                        .payment-state td {
+                        border: none;
+                        }
+                    </style>
+                    <div class="page">
+                        <p>
+                            Notre réf.:23/06/05/16/INSTN/DG/ATN/Rv
+                        </p>
+                        <p>
+                            Antananarivo le, <t t-esc="date" t-options="{'widget': 'date'}"/>
+                        </p>
+                        <div class="text-center">
+                            <h2>Rapport d’analyse de la radioactivité</h2>
+                        </div>
+
+                        <t t-as='journal_payments' t-foreach="journal_payments_dict">
+                            <t t-set="journal_payments" t-value="journal_payments_dict[journal_payments]"/>
+                            <table class="table payment-state">
+                                <tr>
+                                    <td>
+                                        <span class="custom-h3">Journal:
+                                            <t t-esc="journal_payments['journal_name']"/>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="custom-h3">Total:
+                                            <t t-esc="currency.round(journal_payments['subtotal'])"
+                                               t-options="{'widget': 'monetary', 'precision': currency_precision,  'display_currency': currency}"/>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <t t-set="payments" t-value="journal_payments['payments']"></t>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Mémo</th>
+                                        <th>Client</th>
+                                        <th>Montant</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach='payments' t-as='line'>
+                                        <td>
+                                            <t t-esc="line['name']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line['memo']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line['partner']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line['amount']"
+                                               t-options="{'widget': 'monetary', 'precision': currency_precision,  'display_currency': currency}"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                        </t>
+
+                        <br/>
+                        <div align="right">
+                            <strong>Total:
+                                <t t-esc="total"
+                                   t-options="{'widget': 'monetary', 'precision': currency_precision,  'display_currency': currency}"/>
+                            </strong>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+
+
+    <record id="payment_report_details_report" model="ir.actions.report">
+        <field name="name">Radiation Report</field>
+        <field name="model">analyse.prestation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">radiation_reporter.radiationreport</field>
+    </record>
+
+</odoo>

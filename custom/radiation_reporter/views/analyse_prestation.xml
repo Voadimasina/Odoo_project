@@ -17,10 +17,18 @@
                             type="object" class="oe_highlight" title="Marquer comme fait"
                             attrs="{'invisible': [('state', '=', 'done')]}"/>
                     <button name="action_set_cancel" string="Annuler"
-                            type="object"  title="Marquer comme nouveau"
+                            type="object" title="Marquer comme nouveau"
                             attrs="{'invisible': [('state', '!=', 'done')]}"/>
                 </header>
                 <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_view_resultats" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="resultat_count" widget="statinfo" string="Resultats"/>
+                        </button>
+                        <button name="action_view_analyse" type="object" class="oe_stat_button" icon="fa-flask">
+                            <field name="analyse_count" widget="statinfo" string="Analyse"/>
+                        </button>
+                    </div>
                     <h2>
                         <field name="name" readonly="1"/>
                     </h2>
